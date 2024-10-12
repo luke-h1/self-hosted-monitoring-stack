@@ -1,0 +1,2 @@
+- figure out why prometheus fails to start on boot
+- add own ssh key to the instances
