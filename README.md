@@ -14,3 +14,12 @@ verify the installation by visiting the respective URLs / running the following 
 systemctl status prometheus
 systemctl status grafana-server
 ```
+
+useful commands:
+
+```
+journalctl -u service-name.service # view logs
+journalctl -u -b service-name.service # view logs from current boot
+systemctl status service-name.service # check status
+systemctl restart service-name.service # restart service
+```
