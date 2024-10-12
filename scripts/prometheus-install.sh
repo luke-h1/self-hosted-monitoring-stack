@@ -50,10 +50,33 @@ sudo chown -R prometheus:prometheus /var/lib/prometheus
 
 
 
+sudo bash -c 'cat <<EOF > /etc/systemd/system/prometheus.service
+[Unit]
+Description=Prometheus Monitoring
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=prometheus
+Restart=on-failure
+
+# Location of the prometheus executable
+ExecStart=/usr/local/bin/prometheus \
+  --config.file=/etc/prometheus/prometheus.yml \
+  --storage.tsdb.path=/etc/test
+
+[Install]
+WantedBy=multi-user.target
+
+Restart=always
+RestartSec=3
+EOF'
+
+
 # promtool check config /etc/prometheus/prometheus.yml
 
 sudo systemctl daemon-reload
-sudo systemctl enable prometheus
+sudo systemctl enable --now prometheus
 sudo systemctl start prometheus
 sudo systemctl status prometheus
 echo "prom started"
